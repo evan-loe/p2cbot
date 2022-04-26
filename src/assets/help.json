@@ -1,0 +1,25 @@
+{
+  "help": [
+    {
+      "title": "P2C Bot Help Pages!",
+      "name": "Power To Change Summer DG Bot",
+      "value": "Hello there! It's me, {insert creative name}! I'm a mutli-purpose bot that can do random stuff!\nReact with the arrows to see the commands!\nYou can also use commands in a DM channel with the bot!\n\nIf you are still confused after reading this guide or want to talk DM pigpigchui#0753]",
+      "colour": [
+        161,
+        202,
+        255
+      ]
+    },
+    {
+      "title":"Help Commands",
+      "name": "`{prefix}bible [phrase, book, verse, etc...]`",
+      "value": "Use {prefix}bible ***phrase, book, verse, etc...*** to search Bible Gateway\nExample:\n{prefix}bible John 3:16",
+      "colour": [
+        161,
+        202,
+        255
+      ]
+    }
+  ]
+    
+}
