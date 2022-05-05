@@ -4,6 +4,12 @@
     "@discordjs/rest": "^0.4.1",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
-    "node-fetch": "^2.6.6"
+    "html-to-text": "^8.2.0",
+    "node-fetch": "^2.6.6",
+    "node-html-parser": "^5.3.3"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   }
 }

@@ -46,7 +46,7 @@ class PaginationEmbed {
 
   addFooters() {
     this.embedList.forEach((page, index) => {
-      page.setFooter(`Page ${index + 1} of ${this.length}`);
+      page.setFooter(String(`Page ${index + 1} of ${this.length}`));
     });
     return this;
   }
