@@ -27,8 +27,8 @@ async function tick() {
     //get the mins of the current time
     var mins = new Date().getMinutes();
 
-    // at the first minute of every hour
-    if (mins == "00") {
+    // at the first minute of every hour, or always if its in dev mode
+    if (mins == "00" || process.env.DEV_STAGE != "production") {
         checkCalEvents();
     }
 }
@@ -74,7 +74,7 @@ async function checkCalEvents() {
                     minutes = '0' + minutes;
                 }
                 announcement.push(`@everyone This is a reminder that ${event.summary} will be starting at ${hours}:${minutes}${ampm}!`);
-                
+
                 if (event.description) // if there is a description, send that too
                     announcement.push(`${event.description}`);
             }
@@ -84,5 +84,9 @@ async function checkCalEvents() {
 
 }
 
-// minutely tick
-setInterval(tick, 60 * 1000);
+// minutely tick (every second in dev mode)
+if (process.env.DEV_STAGE === "production") {
+    setInterval(tick, 60 * 1000);
+} else {
+    setInterval(tick, 1000);
+}
