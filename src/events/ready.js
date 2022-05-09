@@ -17,6 +17,9 @@ module.exports = {
 
     (async () => {
       try {
+        // start the google calendar checks when the client is ready
+        require("../utils/gcalReminders");
+
         if (process.env.DEV_STAGE === "production") {
           await rest.put(Routes.applicationCommands(CLIENT_ID), {
             body: commands,
