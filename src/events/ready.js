@@ -6,7 +6,7 @@ module.exports = {
   name: "ready",
   once: true,
   execute(client, commands) {
-    console.log("Sze Yap bot is online");
+    console.log("P2C bot is online");
     console.log(commands);
 
     const CLIENT_ID = client.user.id;

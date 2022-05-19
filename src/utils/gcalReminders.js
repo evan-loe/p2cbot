@@ -41,7 +41,7 @@ async function checkCalEvents() {
         channel = await require("../index.js").channels.fetch("968336471356481590"); // announcements channel
     } else {
         channel = await require("../index.js").channels.fetch("968339905543569439"); // mods channel
-        announcement.push("[THIS IS A TESTING MESSAGE]");
+        // announcement.push("[THIS IS A TESTING MESSAGE]");
     }
 
     // query the calendar
@@ -58,7 +58,10 @@ async function checkCalEvents() {
         for (const event of res.data.items) {
             if (event.colorId == 4) {
                 // found an event of the proper color (flamingo).
-                let start = new Date(event.start.dateTime)
+                let start = new Date(event.start.dateTime);
+                
+                if (start - Date.now() > 1000 * 60 * 14) return;
+
                 let hours = start.getHours();
                 let minutes = start.getMinutes();
                 let ampm = "am";
@@ -73,12 +76,14 @@ async function checkCalEvents() {
                 if (minutes < 10) {
                     minutes = '0' + minutes;
                 }
-                announcement.push(`@everyone This is a reminder that ${event.summary} will be starting at ${hours}:${minutes}${ampm}!`);
+                announcement.push(`@everyone This is a reminder that **${event.summary}** will be starting at **${hours}:${minutes}${ampm}!**`);
 
                 if (event.description) // if there is a description, send that too
                     announcement.push(`${event.description}`);
             }
-            channel.send(announcement.join("\n"));
+            if (announcement.length) {
+                channel.send(announcement.join("\n"));
+            }
         }
     });
 
@@ -86,7 +91,7 @@ async function checkCalEvents() {
 
 // minutely tick (every second in dev mode)
 if (process.env.DEV_STAGE === "production") {
-    setInterval(tick, 60 * 1000);
+    setInterval(tick, 60 * 1000 * 15);
 } else {
-    setInterval(tick, 1000);
+    setInterval(tick, 10 * 1000 * 15);
 }
