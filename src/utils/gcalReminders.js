@@ -60,7 +60,7 @@ async function checkCalEvents() {
                 // found an event of the proper color (flamingo).
                 let start = new Date(event.start.dateTime);
                 
-                if (start - Date.now() > 1000 * 60 * 14) return;
+                if (start - Date.now() > 1000 * 60 * 14 || start - Date.now() < 0) return;
 
                 let hours = start.getHours();
                 let minutes = start.getMinutes();
@@ -90,8 +90,4 @@ async function checkCalEvents() {
 }
 
 // minutely tick (every second in dev mode)
-if (process.env.DEV_STAGE === "production") {
-    setInterval(tick, 60 * 1000 * 15);
-} else {
-    setInterval(tick, 10 * 1000 * 15);
-}
+setInterval(tick, 60 * 1000 * 15);
