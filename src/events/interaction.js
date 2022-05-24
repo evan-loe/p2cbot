@@ -24,11 +24,13 @@ module.exports = {
       });
     } catch (error) {
       if (error) console.error(error);
-
-      await interaction.reply({
-        content: "An error occurred while executing that command.",
-        ephemeral: true,
-      });
+      try {
+        await interaction.channel.send({
+          content: "An error occurred while executing that command."
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   },
 };
