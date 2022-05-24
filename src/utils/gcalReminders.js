@@ -40,7 +40,7 @@ async function checkCalEvents() {
     if (process.env.DEV_STAGE === "production") {
         channel = await require("../index.js").channels.fetch("968336471356481590"); // announcements channel
     } else {
-        channel = await require("../index.js").channels.fetch("968339905543569439"); // mods channel
+        channel = await require("../index.js").channels.fetch("976886092789874739"); // mods channel
         // announcement.push("[THIS IS A TESTING MESSAGE]");
     }
 
