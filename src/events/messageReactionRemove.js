@@ -4,7 +4,7 @@ const { reactionRoleMessages } = require("../utils/StateManager");
 
 
 module.exports = {
-    name: "messageReactionAdd",
+    name: "messageReactionRemove",
     /**
      * 
      * @param {MessageReaction} reaction 
@@ -24,8 +24,8 @@ module.exports = {
         const role = reaction.message.guild.roles.cache.get(roleId);
         
         if (role && member) {
-            member.roles.add(role);
-            console.log(`Added role ${role.name} for ${member.displayName}`);
+            member.roles.remove(role);
+            console.log(`Removed role ${role.name} for ${member.displayName}`);
         }
     }
 }

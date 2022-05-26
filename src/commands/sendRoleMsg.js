@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const { textToSlash, commandTypes } = require("../utils/textToSlash");
+const fs = require("fs")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,26 +11,28 @@ module.exports = {
     async execute({ type, args, message }) {
         const interaction =
         type === commandTypes.TEXT ? textToSlash(message) : message;
-
-        const roles = require("../assets/reactionRoleMessages.json")[message.guild.id];
+        
+        const data = require("../assets/reactionRoleMessages.json");
+        const roles = data["reactionMessage"];
+        
 
         const embed = new MessageEmbed()
             .setTitle("Roles!")
-            .setDescription(`React to pick up a role!\n${roles.entries().map((emoji, role) => {
-                `${emoji} ${role}\n`
-            })}`);
+            .setDescription(`React to pick up a role!\n\n${Object.entries(roles).map(([emoji, roleId]) => {
+                const role = message.guild.roles.cache.get(roleId);
+                return `${emoji} - ${role}`
+            }).join("\n")}`)
+            .setColor([178, 245, 78]);
 
-        const sentMsg = await interaction.reply({embed: embed, fetchReply: true});
-        roles.entries().forEach(() => {
+        const sentMsg = await interaction.channel.send({embeds: [embed], fetchReply: true});
+        Object.entries(roles).forEach(([emoji]) => {
             sentMsg.react(emoji);
         })
-        // const filter = (reaction, user) => {console.log("Filtering"); return true;};
-        // const collector = sentMsg.createReactionCollector(filter, {time: 15000});
-        // collector.on('collect', (r, user) => {
-        //   console.log(`${r.emoji} has id ${r.emoji.id}`)});
-        // collector.on('end', collected => console.log(`Collected ${collected.size} items`));
+        data[sentMsg.id] = roles;
+        fs.writeFileSync("./src/assets/reactionRoleMessages.json", JSON.stringify(data));
+        interaction.reply("OK done!");
     },
     parse() {
     return [];
-  },
+  }
 }
